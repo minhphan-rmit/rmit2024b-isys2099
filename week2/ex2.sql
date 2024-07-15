@@ -15,12 +15,12 @@ WHERE age BETWEEN 20 AND 30
 GROUP BY current_location;
 
 -- For finding the 10 cities nearest to Sydney
-CREATE INDEX idx_cities_latitude ON cities(latitude);
-CREATE INDEX idx_cities_longitude ON cities(longitude);
+CREATE INDEX idx_cities_latitude ON cities(lat);
+CREATE INDEX idx_cities_longitude ON cities(lng);
 
-SELECT c.id, c.name, c.latitude, c.longitude,
-       (POWER(c.latitude - s.latitude, 2) + POWER(c.longitude - s.longitude, 2)) AS distance
+SELECT c.id, c.name, c.lat, c.lng,
+       (POWER(c.lat - s.lat, 2) + POWER(c.lng - s.lng, 2)) AS distance
 FROM cities c,
-     (SELECT latitude, longitude FROM cities WHERE name = 'Sydney') s
+     (SELECT lat, lng FROM cities WHERE name = 'Sydney') s
 ORDER BY distance
 LIMIT 10;
