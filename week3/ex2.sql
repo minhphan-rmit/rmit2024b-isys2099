@@ -1,0 +1,21 @@
+CREATE TABLE `cities` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `lat` DECIMAL(10, 4) NOT NULL,
+  `lng` DECIMAL(10, 4) NOT NULL,
+  `capital` VARCHAR(255) NOT NULL,
+  `population` INT NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+PARTITION BY RANGE COLUMNS (lat, lng) (
+  PARTITION p_nw VALUES LESS THAN (0, 0),
+  PARTITION p_ne VALUES LESS THAN (0, 181),
+  PARTITION p_sw VALUES LESS THAN (181, 0),
+  PARTITION p_se VALUES LESS THAN (181, 181)
+);
+
+SELECT * FROM cities
+WHERE lat >= 0 AND lng < 0;
+
+SELECT * FROM cities PARTITION (p_nw)
+WHERE lat >= 0 AND lng < 0;
