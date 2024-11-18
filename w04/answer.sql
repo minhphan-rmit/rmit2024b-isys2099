@@ -31,7 +31,11 @@ ADD INDEX idx_dno_sex (Dno, Sex);
 
 -- Exercise 2
 
-
+SELECT fname, dname, dependent_name
+FROM Employee JOIN Department
+ON Dno = Dnumber
+JOIN Dependent
+ON Essn = Ssn;
 
 -- MySQL provides optimizer hints
 -- https://dev.mysql.com/doc/refman/8.4/en/optimizer-hints.html
